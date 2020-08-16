@@ -18,5 +18,7 @@ namespace GrayscaleBlock3D.AppSettings
         public GameObject PreviewBlockPrefab = default;
         public Transform PlaceBlocks = default;
 
+        public Transform ExplosionPrefab = default;
+
     }
 }

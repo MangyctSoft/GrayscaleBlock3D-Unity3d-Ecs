@@ -27,7 +27,7 @@ MonoBehaviour:
   - 0.4
   - 0.7
   - 1
-  DelayMerge: 0.6
+  DelayMerge: 0.3
   DelayFall: 0.01
   StartColor: 2
-  EndColor: 6
+  EndColor: 4

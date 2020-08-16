@@ -61,6 +61,7 @@ namespace GrayscaleBlock3D
                 .Add(new BlockInstallColorSystem())
                 .Add(new RandomColorSystem())
                 .Add(new MergeSystem())
+                .Add(new EffectSystem())
 
                 .Add(new MergeTimerStartSystem())
 
