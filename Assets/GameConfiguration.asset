@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60b71ec938278645bb053adb49d5973, type: 3}
+  m_Name: GameConfiguration
+  m_EditorClassIdentifier: 
+  SizeField: {x: 5, y: 10}
+  BlockubePrefab: {fileID: 2029715421354432397, guid: 771cb972577fd3f40a7efa7553f1d53c,
+    type: 3}
+  CurrentBlockPosition: {x: 2, y: 10, z: 0}
+  PreviewBlockPosition: {x: 0, y: 0, z: 0}
+  SpeedMove: 1
+  SpeedFall: 1
+  TextBlockMergeUndicatorPrefab: {fileID: 0}
+  BlockColors:
+  - 0
+  - 0.01
+  - 0.2
+  - 0.4
+  - 0.7
+  - 1
+  DelayMerge: 0.6
+  DelayFall: 0.01
+  StartColor: 2
+  EndColor: 6
