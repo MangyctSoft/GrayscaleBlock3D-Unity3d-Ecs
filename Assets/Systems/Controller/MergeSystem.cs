@@ -5,7 +5,7 @@ using GrayscaleBlock3D.Systems.Models.Data;
 using GrayscaleBlock3D.Components.Events.FieldEevents;
 using GrayscaleBlock3D.Components.Events.InputEvents;
 using GrayscaleBlock3D.Extensions;
-using UnityEngine;
+using GrayscaleBlock3D.Components.Timers;
 
 namespace GrayscaleBlock3D.Systems.Controller
 {
@@ -15,7 +15,7 @@ namespace GrayscaleBlock3D.Systems.Controller
 
         private readonly GameContext _gameContext = null;
         private readonly EcsFilter<ManagerBlockComponent, MergeStartEvent> _filterStart = null;
-        private readonly EcsFilter<ManagerBlockComponent, MergeExecuteEvent> _filterExecute = null;
+        private readonly EcsFilter<ManagerBlockComponent, MergeExecuteEvent>.Exclude<TimerMergeComponent> _filterExecute = null;
 
         private Blockube blockUp = null;
         private Blockube blockDown = null;
@@ -26,7 +26,8 @@ namespace GrayscaleBlock3D.Systems.Controller
                 ref var block = ref _filterStart.Get1(i);
 
                 var position = block.Position;
-                Debug.Log("MergeSystem!!" + position);
+
+                ref var nextStep = ref _filterStart.GetEntity(i);
 
                 if ((int)position.y > 0)
                 {
@@ -35,25 +36,33 @@ namespace GrayscaleBlock3D.Systems.Controller
 
                     if (blockUp.EqualsColor(blockDown) && blockDown.NumberColor > _gameContext.ONE_DIFF)
                     {
-                        blockUp.SetActive(false);
-                        _gameContext.RedLine[(int)position.x] = (int)position.y;
-                        var newNumberColor = (ushort)(blockUp.NumberColor - _gameContext.ONE_DIFF);
-                        var color = Additive.SetColor(_gameConfiguration, newNumberColor);
-                        blockDown.Color = color;
-                        blockDown.NumberColor = newNumberColor;
-                        //block.Position = blockDown.Position;
+                        nextStep.Get<IsMergeMadeEvent>();
+                        nextStep.Get<MergeExecuteEvent>();
+
+                        nextStep.Del<MergeStartEvent>();
+                        return;
                     }
 
                 }
-                ref var nextStep = ref _filterStart.GetEntity(i);
-                // nextStep.Get<ManagerBlockComponent>().Position = position;
-                // nextStep.Get<RedLineEvent>();
-                //nextStep.Get<SetRandomColorEvent>();
                 nextStep.Get<InputNonConstrainMoveEvent>();
-                //nextStep.Get<MainBlockComponent>().Blockube.Position = _gameConfiguration.CurrentBlockPosition;
 
+                nextStep.Del<MergeStartEvent>();
+            }
+
+            foreach (var i in _filterExecute)
+            {
+                ref var block = ref _filterExecute.Get1(i);
+                var position = block.Position;
+                ref var nextStep = ref _filterStart.GetEntity(i);
+
+                nextStep.Get<ManagerBlockComponent>().Position = blockDown.Position;
+                nextStep.Get<ManagerBlockComponent>().NumberColor = --blockUp.NumberColor;
+                nextStep.Get<ManagerBlockComponent>().Active = false;
+                nextStep.Get<BlockInstallColorEvent>();
+                nextStep.Get<MergeStartEvent>();
+
+                nextStep.Del<MergeExecuteEvent>();
             }
         }
-
     }
 }

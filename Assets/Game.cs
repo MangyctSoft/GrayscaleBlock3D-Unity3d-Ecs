@@ -32,7 +32,7 @@ namespace GrayscaleBlock3D
 
             _systems
 
-                // Model (CRUD)
+                // Model
                 //Add(new GameFieldTestInitSystem())
                 .Add(new GameFieldInitSystem())
                 .Add(new ScoreInitSystem())
@@ -58,9 +58,11 @@ namespace GrayscaleBlock3D
                 .Add(new FallTimerStartSystem())
 
                 .Add(new BlockToFieldSystem())
-                .Add(new RedLinedSystem())
+                .Add(new BlockInstallColorSystem())
                 .Add(new RandomColorSystem())
                 .Add(new MergeSystem())
+
+                .Add(new MergeTimerStartSystem())
 
 
 
@@ -84,10 +86,12 @@ namespace GrayscaleBlock3D
                 .OneFrame<ChangePositionEvent>()
                 .OneFrame<IsFallMadeEvent>()
                 .OneFrame<BlockInstallToFieldEvent>()
-                .OneFrame<MergeStartEvent>()
-                .OneFrame<MergeExecuteEvent>()
+
+                //.OneFrame<MergeStartEvent>()
+                //.OneFrame<MergeExecuteEvent>()
                 .OneFrame<IsMergeMadeEvent>()
-                .OneFrame<RedLineEvent>()
+
+                //.OneFrame<BlockInstallColorEvent>()
                 .OneFrame<SetRandomColorEvent>()
 
                 // inject 
