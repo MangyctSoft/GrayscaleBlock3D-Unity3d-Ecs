@@ -65,6 +65,8 @@ namespace GrayscaleBlock3D
 
                 .Add(new MergeTimerStartSystem())
 
+                .Add(new FindLineSystem())
+
 
 
 

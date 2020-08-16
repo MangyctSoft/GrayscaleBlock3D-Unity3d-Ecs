@@ -59,7 +59,7 @@ namespace GrayscaleBlock3D.Systems.Controller
                 nextStep.Get<ManagerBlockComponent>().NumberColor = --blockUp.NumberColor;
                 nextStep.Get<ManagerBlockComponent>().Active = false;
                 nextStep.Get<BlockInstallColorEvent>();
-                nextStep.Get<MergeStartEvent>();
+                nextStep.Get<FindLineStartEvent>();
 
                 nextStep.Del<MergeExecuteEvent>();
             }

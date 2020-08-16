@@ -27,7 +27,7 @@ namespace GrayscaleBlock3D.Systems.Controller
                 nextStep.Get<BlockInstallColorEvent>();
                 nextStep.Get<SetRandomColorEvent>();
                 nextStep.Get<MainBlockComponent>().Blockube.Position = _gameConfiguration.CurrentBlockPosition;
-                nextStep.Get<MergeStartEvent>();
+                nextStep.Get<FindLineStartEvent>();
             }
         }
     }

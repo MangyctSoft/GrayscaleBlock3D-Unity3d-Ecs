@@ -24,6 +24,8 @@ namespace GrayscaleBlock3D.Systems.Controller
                 _gameContext.RedLine[(int)position.x] = (int)position.y + _gameContext.ONE_DIFF;
 
                 var blockInField = _gameContext.GameField[(int)position.x, (int)position.y];
+                blockInField.NumberColor = numberColor;
+
                 if (active)
                 {
                     blockInField.SetActive(active);
@@ -33,7 +35,6 @@ namespace GrayscaleBlock3D.Systems.Controller
                     var blockUp = _gameContext.GameField[(int)position.x, (int)position.y + _gameContext.ONE_DIFF];
                     blockUp.SetActive(active);
                 }
-                blockInField.NumberColor = numberColor;
 
                 var color = Additive.SetColor(_gameConfiguration, numberColor);
 

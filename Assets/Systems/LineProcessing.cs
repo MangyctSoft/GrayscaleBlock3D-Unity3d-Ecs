@@ -51,32 +51,7 @@ namespace GrayscaleBlock3D
                 }
             }
         }
-        private bool CheckLine(Blockube[,] blockubes, int y)
-        {
-            int currentColor = 0;
-            int previosColor = 0;
-            for (int x = 0; x < blockubes.GetLength(0); x++)
-            {
-                // currentColor = blockubes[x, y].color;
-                //Debug.LogFormat("i = {0}, currentColor = {1}", i, currentColor);
-                if (currentColor.Equals(0))
-                {
-                    return false;
-                }
 
-                if (x.Equals(0))
-                {
-                    previosColor = currentColor;
-                    continue;
-                }
-
-                if (!currentColor.Equals(previosColor))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
         private void RemoveLine(ref Blockube[,] blockubes, int line, int[] hightLines)
         {
             for (int x = 0; x < blockubes.GetLength(0); x++)
