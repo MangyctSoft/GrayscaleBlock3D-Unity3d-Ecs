@@ -52,37 +52,7 @@ namespace GrayscaleBlock3D
             }
         }
 
-        private void RemoveLine(ref Blockube[,] blockubes, int line, int[] hightLines)
-        {
-            for (int x = 0; x < blockubes.GetLength(0); x++)
-            {
-                // blockubes[x, line].transform.position = new Vector3(40, 40, 40);
-                // blockubes[x, line].color = 0;
-            }
 
-            for (int x = 0; x < blockubes.GetLength(0); x++)
-            {
-                if (!hightLines[x].Equals(0))
-                {
-                    hightLines[x]--;
-                }
-                for (int y = line; y < blockubes.GetLength(1) - 1; y++)
-                {
-                    // if (blockubes[x, y + 1].color.Equals(0))
-                    // {
-                    //     break;
-                    // }
-                    // else
-                    // {
-                    //     // blockubes[x, y] = blockubes[x, y + 1];
-                    //     // blockubes[x, y + 1].color = 0;
-                    //     // blockubes[x, y].transform.position += Vector3.down;
-
-                    // }
-
-                }
-            }
-        }
     }
 
 

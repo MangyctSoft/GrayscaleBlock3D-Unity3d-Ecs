@@ -6,6 +6,7 @@ using GrayscaleBlock3D.Components.Events.FieldEevents;
 using GrayscaleBlock3D.Components.Events.InputEvents;
 using GrayscaleBlock3D.Extensions;
 using GrayscaleBlock3D.Components.Timers;
+using UnityEngine;
 
 namespace GrayscaleBlock3D.Systems.Controller
 {
@@ -14,7 +15,7 @@ namespace GrayscaleBlock3D.Systems.Controller
         private readonly GameConfiguration _gameConfiguration;
 
         private readonly GameContext _gameContext = null;
-        private readonly EcsFilter<ManagerBlockComponent, MergeStartEventX> _filterStart = null;
+        private readonly EcsFilter<ManagerBlockComponent, MergeStartEventX>.Exclude<RemoveLineEventX> _filterStart = null;
         private readonly EcsFilter<ManagerBlockComponent, MergeExecuteEvent>.Exclude<TimerMergeComponent> _filterExecute = null;
 
         private Blockube blockUp = null;
@@ -28,6 +29,7 @@ namespace GrayscaleBlock3D.Systems.Controller
                 var position = block.Position;
 
                 ref var nextStep = ref _filterStart.GetEntity(i);
+                Debug.Log("MergeSystem");
 
                 if ((int)position.y > 0)
                 {
@@ -51,6 +53,8 @@ namespace GrayscaleBlock3D.Systems.Controller
 
             foreach (var i in _filterExecute)
             {
+                Debug.Log("IsMergeMadeEvent");
+
                 ref var block = ref _filterExecute.Get1(i);
                 var position = block.Position;
                 ref var nextStep = ref _filterStart.GetEntity(i);

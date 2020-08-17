@@ -12,6 +12,7 @@ namespace GrayscaleBlock3D.Systems.Models.Data
         }
         public Color Color
         {
+            //get => Color; - Получают общую ссылку на цвет, изменяя который изменяется у всех с таким же цветом.
             set => Renderer.material.SetColor("_Color", value);
         }
         public Transform Transform { get; }

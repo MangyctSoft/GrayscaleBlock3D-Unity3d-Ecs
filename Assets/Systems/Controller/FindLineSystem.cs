@@ -31,7 +31,9 @@ namespace GrayscaleBlock3D.Systems.Controller
 
                 if (CheckLine(_gameContext.GameField, line))
                 {
-                    Debug.Log("Line some");
+                    nextStep.Get<RemoveLineEventX>();
+                    // nextStep.Del<FindLineStartEventX>();
+                    // return;
 
                 }
 
