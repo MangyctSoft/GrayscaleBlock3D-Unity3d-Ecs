@@ -9,7 +9,7 @@ namespace GrayscaleBlock3D.Systems.Controller
     {
         private readonly GameConfiguration _gameConfiguration;
         private readonly GameContext _gameContext = null;
-        private readonly EcsFilter<ManagerBlockComponent, BlockInstallColorEvent> _filter = null;
+        private readonly EcsFilter<ManagerBlockComponent, BlockInstallColorEventX> _filter = null;
         void IEcsRunSystem.Run()
         {
             foreach (var i in _filter)
@@ -41,7 +41,7 @@ namespace GrayscaleBlock3D.Systems.Controller
                 blockInField.Color = color;
 
                 ref var nextStep = ref _filter.GetEntity(i);
-                nextStep.Del<BlockInstallColorEvent>();
+                nextStep.Del<BlockInstallColorEventX>();
             }
         }
     }

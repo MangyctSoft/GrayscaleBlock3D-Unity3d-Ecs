@@ -15,7 +15,7 @@ namespace GrayscaleBlock3D.Systems.Controller
         private readonly GameConfiguration _gameConfiguration;
 
         private readonly GameContext _gameContext = null;
-        private readonly EcsFilter<ManagerBlockComponent, FindLineStartEvent>.Exclude<BlockInstallColorEvent> _filterStart = null;
+        private readonly EcsFilter<ManagerBlockComponent, FindLineStartEventX>.Exclude<BlockInstallColorEventX> _filterStart = null;
         //private readonly EcsFilter<ManagerBlockComponent, MergeExecuteEvent>.Exclude<TimerMergeComponent> _filterExecute = null;
 
         private Blockube blockUp = null;
@@ -27,17 +27,18 @@ namespace GrayscaleBlock3D.Systems.Controller
                 ref var block = ref _filterStart.Get1(i);
                 ushort line = (ushort)block.Position.y;
                 Debug.Log("Finde line" + line);
+                ref var nextStep = ref _filterStart.GetEntity(i);
 
                 if (CheckLine(_gameContext.GameField, line))
                 {
                     Debug.Log("Line some");
+
                 }
 
 
-                ref var nextStep = ref _filterStart.GetEntity(i);
-                nextStep.Get<MergeStartEvent>();
+                nextStep.Get<MergeStartEventX>();
 
-                nextStep.Del<FindLineStartEvent>();
+                nextStep.Del<FindLineStartEventX>();
 
             }
 
@@ -51,8 +52,7 @@ namespace GrayscaleBlock3D.Systems.Controller
             for (ushort x = 0; x < blockubes.GetLength(0); x++)
             {
                 currentColor = blockubes[x, y].NumberColor;
-                Debug.Log("currentColor = " + currentColor);
-
+                // Debug.Log("currentColor = " + currentColor);
                 if (currentColor.Equals(0))
                 {
                     return false;

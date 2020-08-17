@@ -14,7 +14,7 @@ namespace GrayscaleBlock3D.Systems.Controller
         private readonly GameConfiguration _gameConfiguration;
 
         private readonly GameContext _gameContext = null;
-        private readonly EcsFilter<ManagerBlockComponent, MergeStartEvent> _filterStart = null;
+        private readonly EcsFilter<ManagerBlockComponent, MergeStartEventX> _filterStart = null;
         private readonly EcsFilter<ManagerBlockComponent, MergeExecuteEvent>.Exclude<TimerMergeComponent> _filterExecute = null;
 
         private Blockube blockUp = null;
@@ -39,14 +39,14 @@ namespace GrayscaleBlock3D.Systems.Controller
                         nextStep.Get<IsMergeMadeEvent>();
                         nextStep.Get<MergeExecuteEvent>();
 
-                        nextStep.Del<MergeStartEvent>();
+                        nextStep.Del<MergeStartEventX>();
                         return;
                     }
 
                 }
                 nextStep.Get<InputNonConstrainMoveEvent>();
 
-                nextStep.Del<MergeStartEvent>();
+                nextStep.Del<MergeStartEventX>();
             }
 
             foreach (var i in _filterExecute)
@@ -58,8 +58,8 @@ namespace GrayscaleBlock3D.Systems.Controller
                 nextStep.Get<ManagerBlockComponent>().Position = blockDown.Position;
                 nextStep.Get<ManagerBlockComponent>().NumberColor = --blockUp.NumberColor;
                 nextStep.Get<ManagerBlockComponent>().Active = false;
-                nextStep.Get<BlockInstallColorEvent>();
-                nextStep.Get<FindLineStartEvent>();
+                nextStep.Get<BlockInstallColorEventX>();
+                nextStep.Get<FindLineStartEventX>();
 
                 nextStep.Del<MergeExecuteEvent>();
             }
