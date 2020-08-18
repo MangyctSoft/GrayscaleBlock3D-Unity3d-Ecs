@@ -13,24 +13,22 @@ namespace GrayscaleBlock3D.Systems.Controller
     internal sealed class RemoveLineSystem : IEcsRunSystem
     {
         private readonly GameConfiguration _gameConfiguration;
-
         private readonly GameContext _gameContext = null;
-        private readonly EcsFilter<ManagerBlockComponent, RemoveLineEventX> _filter = null;
+        private readonly EcsFilter<ManagerBlockComponent, RemoveLineEventX>.Exclude<IsRemoveLineMadeEvent, TimerRemoveLineComponent> _filter = null;
         void IEcsRunSystem.Run()
         {
             foreach (var i in _filter)
             {
                 ref var block = ref _filter.Get1(i);
                 ushort line = (ushort)block.Position.y;
-                Debug.Log("RemoveLineSystem " + line);
                 ref var nextStep = ref _filter.GetEntity(i);
 
                 RemoveLine(_gameContext.GameField, line, _gameContext.RedLine);
 
+                nextStep.Get<MergeStartEventX>();
+
                 nextStep.Del<RemoveLineEventX>();
             }
-
-
         }
         private void RemoveLine(in Blockube[,] blockubes, in ushort line, in int[] redLine)
         {
@@ -48,18 +46,16 @@ namespace GrayscaleBlock3D.Systems.Controller
                 }
                 for (int y = line; y < blockubes.GetLength(1) - 1; y++)
                 {
-                    Debug.Log("---------------------");
-                    Debug.Log(blockubes[x, y + 1].NumberColor);
-                    Debug.Log(blockubes[x, y + 1].Transform.gameObject.activeSelf);
-
+                    // Debug.Log("---------------------");
+                    // Debug.Log(blockubes[x, y + 1].NumberColor);
+                    // Debug.Log(blockubes[x, y + 1].Transform.gameObject.activeSelf);
                     if (!blockubes[x, y + 1].Transform.gameObject.activeSelf)
                     {
                         break;
                     }
                     else
                     {
-                        Debug.LogFormat("DOWN {0} x {1}", x, y);
-
+                        //Debug.LogFormat("DOWN {0} x {1}", x, y);
                         var color = Additive.SetColor(_gameConfiguration, blockubes[x, y + 1].NumberColor);
                         blockubes[x, y].Color = color;
                         blockubes[x, y].NumberColor = blockubes[x, y + 1].NumberColor;
@@ -67,9 +63,7 @@ namespace GrayscaleBlock3D.Systems.Controller
 
                         blockubes[x, y + 1].NumberColor = 0;
                         blockubes[x, y + 1].SetActive(false);
-
                     }
-
                 }
             }
         }

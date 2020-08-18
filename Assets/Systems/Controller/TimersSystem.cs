@@ -14,11 +14,13 @@ namespace GrayscaleBlock3D.Systems.Controller
         // auto-injected fields.
         private readonly EcsFilter<TimerFallingComponent, TimerFallingSetupComponent> _filterFalling = null;
         private readonly EcsFilter<TimerMergeComponent> _filterMerge = null;
+        private readonly EcsFilter<TimerRemoveLineComponent> _filterRemoveLine = null;
 
         void IEcsRunSystem.Run()
         {
             MadeTimerFalling();
             MadeTimerMerge();
+            MadeTimerRemoveLine();
         }
         private void MadeTimerFalling()
         {
@@ -46,6 +48,19 @@ namespace GrayscaleBlock3D.Systems.Controller
                 if (timer.TimeLostSec <= 0)
                 {
                     _filterMerge.GetEntity(i).Del<TimerMergeComponent>();
+                }
+            }
+        }
+        private void MadeTimerRemoveLine()
+        {
+            foreach (var i in _filterRemoveLine)
+            {
+                ref var timer = ref _filterRemoveLine.Get1(i);
+                timer.TimeLostSec -= Time.deltaTime;
+
+                if (timer.TimeLostSec <= 0)
+                {
+                    _filterRemoveLine.GetEntity(i).Del<TimerRemoveLineComponent>();
                 }
             }
         }

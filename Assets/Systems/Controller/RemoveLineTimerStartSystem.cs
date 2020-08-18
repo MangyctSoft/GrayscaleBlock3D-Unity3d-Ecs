@@ -6,16 +6,16 @@ using GrayscaleBlock3D.Components.Events.FieldEevents;
 
 namespace GrayscaleBlock3D.Systems.Controller
 {
-    internal sealed class MergeTimerStartSystem : IEcsRunSystem
+    internal sealed class RemoveLineTimerStartSystem : IEcsRunSystem
     {
-        private readonly EcsFilter<TimerMergingSetupComponent, IsMergeMadeEvent> _filter = null;
+        private readonly EcsFilter<TimerRemoveLineSetupComponent, IsRemoveLineMadeEvent> _filter = null;
         void IEcsRunSystem.Run()
         {
             foreach (var i in _filter)
             {
-                ref var timeMergingComponent = ref _filter.Get1(i);
+                ref var timeRemoveLineComponent = ref _filter.Get1(i);
                 ref var nextStep = ref _filter.GetEntity(i);
-                nextStep.Get<TimerMergeComponent>().TimeLostSec = timeMergingComponent.MergeTimeSec;
+                nextStep.Get<TimerRemoveLineComponent>().TimeLostSec = timeRemoveLineComponent.RemoveTimeSec;
             }
         }
     }

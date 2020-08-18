@@ -43,6 +43,7 @@ namespace GrayscaleBlock3D.Systems.Models.Init
             entity.Get<TimerFallingSetupComponent>().FallTimeSec = _gameConfiguration.DelayFall;
             entity.Get<TimerFallingSetupComponent>().FallUnit = _gameConfiguration.SpeedFall;
             entity.Get<TimerMergingSetupComponent>().MergeTimeSec = _gameConfiguration.DelayMerge;
+            entity.Get<TimerRemoveLineSetupComponent>().RemoveTimeSec = _gameConfiguration.DelayMerge * 2;
             return entity;
         }
 

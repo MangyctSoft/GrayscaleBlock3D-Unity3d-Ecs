@@ -60,14 +60,15 @@ namespace GrayscaleBlock3D
                 .Add(new BlockToFieldSystem())
                 .Add(new BlockInstallColorSystem())
                 .Add(new RandomColorSystem())
-                .Add(new MergeSystem())
                 .Add(new EffectSystem())
 
-                .Add(new MergeTimerStartSystem())
 
                 .Add(new FindLineSystem())
                 .Add(new RemoveLineSystem())
+                .Add(new RemoveLineTimerStartSystem())
 
+                .Add(new MergeSystem())
+                .Add(new MergeTimerStartSystem())
 
 
 
@@ -93,6 +94,8 @@ namespace GrayscaleBlock3D
 
                 //.OneFrame<MergeStartEvent>()
                 //.OneFrame<MergeExecuteEvent>()
+                .OneFrame<IsRemoveLineMadeEvent>()
+
                 .OneFrame<IsMergeMadeEvent>()
 
                 //.OneFrame<BlockInstallColorEvent>()

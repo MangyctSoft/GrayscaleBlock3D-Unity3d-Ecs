@@ -15,7 +15,7 @@ namespace GrayscaleBlock3D.Systems.Controller
         private readonly GameConfiguration _gameConfiguration;
 
         private readonly GameContext _gameContext = null;
-        private readonly EcsFilter<ManagerBlockComponent, MergeStartEventX>.Exclude<RemoveLineEventX> _filterStart = null;
+        private readonly EcsFilter<ManagerBlockComponent, MergeStartEventX> _filterStart = null;
         private readonly EcsFilter<ManagerBlockComponent, MergeExecuteEvent>.Exclude<TimerMergeComponent> _filterExecute = null;
 
         private Blockube blockUp = null;

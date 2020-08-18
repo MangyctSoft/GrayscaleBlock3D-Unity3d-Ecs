@@ -12,39 +12,30 @@ namespace GrayscaleBlock3D.Systems.Controller
 {
     internal sealed class FindLineSystem : IEcsRunSystem
     {
-        private readonly GameConfiguration _gameConfiguration;
-
         private readonly GameContext _gameContext = null;
         private readonly EcsFilter<ManagerBlockComponent, FindLineStartEventX>.Exclude<BlockInstallColorEventX> _filterStart = null;
-        //private readonly EcsFilter<ManagerBlockComponent, MergeExecuteEvent>.Exclude<TimerMergeComponent> _filterExecute = null;
 
-        private Blockube blockUp = null;
-        private Blockube blockDown = null;
         void IEcsRunSystem.Run()
         {
             foreach (var i in _filterStart)
             {
                 ref var block = ref _filterStart.Get1(i);
                 ushort line = (ushort)block.Position.y;
-                Debug.Log("Finde line" + line);
                 ref var nextStep = ref _filterStart.GetEntity(i);
 
                 if (CheckLine(_gameContext.GameField, line))
                 {
+                    nextStep.Get<IsRemoveLineMadeEvent>();
                     nextStep.Get<RemoveLineEventX>();
-                    // nextStep.Del<FindLineStartEventX>();
-                    // return;
 
+                    nextStep.Del<FindLineStartEventX>();
+                    return;
                 }
-
 
                 nextStep.Get<MergeStartEventX>();
 
                 nextStep.Del<FindLineStartEventX>();
-
             }
-
-
         }
 
         private bool CheckLine(in Blockube[,] blockubes, in ushort y)
