@@ -4,8 +4,6 @@ using GrayscaleBlock3D.AppSettings;
 using GrayscaleBlock3D.Components.Player;
 using GrayscaleBlock3D.Systems.Models.Data;
 using GrayscaleBlock3D.Components.Events.FieldEevents;
-using GrayscaleBlock3D.Components.Events.InputEvents;
-using GrayscaleBlock3D.Extensions;
 using GrayscaleBlock3D.Components.Timers;
 
 namespace GrayscaleBlock3D.Systems.Controller
@@ -24,7 +22,8 @@ namespace GrayscaleBlock3D.Systems.Controller
                 ref var nextStep = ref _filter.GetEntity(i);
 
                 RemoveLine(_gameContext.GameField, line, _gameContext.RedLine);
-
+                nextStep.Get<ManagerBlockComponent>().NeedScanField = true;
+                nextStep.Get<ManagerBlockComponent>().ScanPosition = new Vector2(0, line);
                 nextStep.Get<MergeStartEventX>();
 
                 nextStep.Del<RemoveLineEventX>();
@@ -46,16 +45,12 @@ namespace GrayscaleBlock3D.Systems.Controller
                 }
                 for (int y = line; y < blockubes.GetLength(1) - 1; y++)
                 {
-                    // Debug.Log("---------------------");
-                    // Debug.Log(blockubes[x, y + 1].NumberColor);
-                    // Debug.Log(blockubes[x, y + 1].Transform.gameObject.activeSelf);
                     if (!blockubes[x, y + 1].Transform.gameObject.activeSelf)
                     {
                         break;
                     }
                     else
                     {
-                        //Debug.LogFormat("DOWN {0} x {1}", x, y);
                         var color = Additive.SetColor(_gameConfiguration, blockubes[x, y + 1].NumberColor);
                         blockubes[x, y].Color = color;
                         blockubes[x, y].NumberColor = blockubes[x, y + 1].NumberColor;

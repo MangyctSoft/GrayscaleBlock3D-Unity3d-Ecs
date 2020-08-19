@@ -12,8 +12,6 @@ namespace GrayscaleBlock3D.Systems.Controller
 {
     internal sealed class MergeSystem : IEcsRunSystem
     {
-        private readonly GameConfiguration _gameConfiguration;
-
         private readonly GameContext _gameContext = null;
         private readonly EcsFilter<ManagerBlockComponent, MergeStartEventX> _filterStart = null;
         private readonly EcsFilter<ManagerBlockComponent, MergeExecuteEvent>.Exclude<TimerMergeComponent> _filterExecute = null;
@@ -27,9 +25,10 @@ namespace GrayscaleBlock3D.Systems.Controller
                 ref var block = ref _filterStart.Get1(i);
 
                 var position = block.Position;
+                var needScanField = block.NeedScanField;
+                var scanPosition = block.ScanPosition;
 
                 ref var nextStep = ref _filterStart.GetEntity(i);
-                Debug.Log("MergeSystem");
 
                 if ((int)position.y > 0)
                 {
@@ -40,21 +39,30 @@ namespace GrayscaleBlock3D.Systems.Controller
                     {
                         nextStep.Get<IsMergeMadeEvent>();
                         nextStep.Get<MergeExecuteEvent>();
-
                         nextStep.Del<MergeStartEventX>();
+
                         return;
                     }
-
+                }
+                if (needScanField)
+                {
+                    nextStep.Get<ManagerBlockComponent>().Position = new Vector2(scanPosition.x, scanPosition.y);
+                    nextStep.Get<ManagerBlockComponent>().ScanPosition += Vector2.right;
+                    if (scanPosition.x > _gameContext.GameField.GetLength(0) - 1)
+                    {
+                        nextStep.Get<ManagerBlockComponent>().NeedScanField = false;
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
                 nextStep.Get<InputNonConstrainMoveEvent>();
-
                 nextStep.Del<MergeStartEventX>();
             }
 
             foreach (var i in _filterExecute)
             {
-                Debug.Log("IsMergeMadeEvent");
-
                 ref var block = ref _filterExecute.Get1(i);
                 var position = block.Position;
                 ref var nextStep = ref _filterStart.GetEntity(i);
