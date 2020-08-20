@@ -1,10 +1,10 @@
-using System;
 using UnityEngine;
 using Leopotam.Ecs;
 using GrayscaleBlock3D.AppSettings;
 using GrayscaleBlock3D.Extensions;
-using GrayscaleBlock3D.Components.Events.InputEvents;
 using GrayscaleBlock3D.Components.Events;
+using GrayscaleBlock3D.Components.Events.InputEvents;
+using GrayscaleBlock3D.Components.Player;
 
 namespace GrayscaleBlock3D.Systems.Controller
 {
@@ -12,9 +12,8 @@ namespace GrayscaleBlock3D.Systems.Controller
     {
         private readonly EcsWorld _world = null;
         private readonly GameContext _gameContext = null;
-
         private readonly EcsFilter<InputNonConstrainMoveEvent> _filter = null;
-        //BlockDirection direction = BlockDirection.Awaite;
+        private readonly EcsFilter<MainBlockComponent> _filterMainBlock = null;
         bool cancel = false;
         public void Run()
         {
@@ -47,30 +46,41 @@ namespace GrayscaleBlock3D.Systems.Controller
             #endregion
             foreach (var i in _filter)
             {
-
                 ref var move = ref _filter.Get1(i);
-
 
                 if (Input.anyKeyDown)
                 {
-
                     var direction = Input.GetAxis("Horizontal");
                     var fall = Input.GetAxis("Vertical");
 
                     if (direction != 0)
                     {
                         SendMessageInGame(new InputMoveStartedEvent() { Axis = direction >= 0 ? Vector2.right : Vector2.left });
-
                     }
                     if (fall != 0)
                     {
-                        //SendMessageInGame(new InputMoveStartedEvent() { Axis = Vector2.down });
-                        SendMessageInGame(new InputFallStartedEvent());
+                        foreach (var m in _filterMainBlock)
+                        {
+                            ref var mainBlock = ref _filterMainBlock.Get1(m);
 
-                        _filter.GetEntity(i).Del<InputNonConstrainMoveEvent>();
+                            var position = mainBlock.Blockube.Position.GetIntVector2();
+
+                            if (position.y > _gameContext.RedLine[position.x])
+                            {
+                                SendMessageInGame(new InputFallStartedEvent());
+                                _filter.GetEntity(i).Del<InputNonConstrainMoveEvent>();
+                            }
+                            else
+                            {
+                                Debug.Log("GAme OVER");
+                                SendMessageInGame(new GameOverEvent());
+                            }
+
+
+                        }
+
                     }
                     cancel = true;
-
                 }
                 else
                 {
@@ -79,15 +89,11 @@ namespace GrayscaleBlock3D.Systems.Controller
                         SendMessageInGame(new InputMoveCanceledEvent());
                         cancel = false;
                     }
-
                 }
-
             }
-
         }
 
-        private void SendMessageInGame<T>(in T messageEvent)
-            where T : struct
+        private void SendMessageInGame<T>(in T messageEvent) where T : struct
         {
             if (_gameContext.GameState != GameStates.Play) return;
             _world.SendMessage(messageEvent);

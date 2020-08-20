@@ -100,6 +100,7 @@ namespace GrayscaleBlock3D
 
                 //.OneFrame<BlockInstallColorEvent>()
                 .OneFrame<SetRandomColorEvent>()
+                .OneFrame<GameOverEvent>()
 
                 // inject 
                 .Inject(gameConfiguration)

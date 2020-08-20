@@ -17,5 +17,10 @@ namespace GrayscaleBlock3D.Extensions
         {
             return blockube1.NumberColor.Equals(blockube2.NumberColor);
         }
+
+        public static Vector2Int GetIntVector2(this Vector2 vector)
+        {
+            return new Vector2Int((int)vector.x, (int)vector.y);
+        }
     }
 }
