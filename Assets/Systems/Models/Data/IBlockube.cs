@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace GrayscaleBlock3D.Systems.Models.Data

@@ -24,11 +24,11 @@ namespace GrayscaleBlock3D.Systems.Controller
                 ref var moveComponent = ref _filter.Get1(i);
                 ref var blockComponent = ref _filter.Get2(i);
 
-                var position = blockComponent.Blockube.Position;
+                var position = blockComponent.CurrentBlock.Position;
 
                 if (IsOutBorder(position, out var borderPosition))
                 {
-                    blockComponent.Blockube.Position = borderPosition;
+                    blockComponent.CurrentBlock.Position = borderPosition;
                     //moveComponent.Speed = 0;
                 }
 

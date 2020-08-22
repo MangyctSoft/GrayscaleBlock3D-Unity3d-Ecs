@@ -24,8 +24,8 @@ namespace GrayscaleBlock3D.Systems.Controller
                 ref var block = ref _filter.Get1(i);
 
                 var newColor = Additive.GetRandomColor(_gameConfiguration, out ushort numberColor);
-                block.Blockube.Color = newColor;
-                block.Blockube.NumberColor = numberColor;
+                block.CurrentBlock.Color = newColor;
+                block.CurrentBlock.NumberColor = numberColor;
 
             }
         }

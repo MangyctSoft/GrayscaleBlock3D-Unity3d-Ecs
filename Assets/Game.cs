@@ -62,7 +62,6 @@ namespace GrayscaleBlock3D
                 .Add(new RandomColorSystem())
                 .Add(new EffectSystem())
 
-
                 .Add(new FindLineSystem())
                 .Add(new RemoveLineSystem())
                 .Add(new RemoveLineTimerStartSystem())
@@ -70,8 +69,7 @@ namespace GrayscaleBlock3D
                 .Add(new MergeSystem())
                 .Add(new MergeTimerStartSystem())
 
-
-
+                .Add(new RotateColorChangeSystem())
 
                 .Add(new TimersSystem())
 
@@ -101,6 +99,8 @@ namespace GrayscaleBlock3D
                 //.OneFrame<BlockInstallColorEvent>()
                 .OneFrame<SetRandomColorEvent>()
                 .OneFrame<GameOverEvent>()
+                .OneFrame<ColorChangeStartEvent>()
+                //.OneFrame<RotateStartEvent>()
 
                 // inject 
                 .Inject(gameConfiguration)

@@ -3,6 +3,7 @@ using GrayscaleBlock3D.AppSettings;
 using GrayscaleBlock3D.Components.Player;
 using GrayscaleBlock3D.Components.Events;
 using GrayscaleBlock3D.Components.Events.FieldEevents;
+using GrayscaleBlock3D.Extensions;
 using UnityEngine;
 
 namespace GrayscaleBlock3D.Systems.Controller
@@ -15,7 +16,7 @@ namespace GrayscaleBlock3D.Systems.Controller
         {
             foreach (var i in _filter)
             {
-                ref var currentBlock = ref _filter.Get1(i).Blockube;
+                ref var currentBlock = ref _filter.Get1(i).CurrentBlock;
 
                 var position = currentBlock.Position;
                 var numberColor = currentBlock.NumberColor;
@@ -26,7 +27,7 @@ namespace GrayscaleBlock3D.Systems.Controller
                 nextStep.Get<ManagerBlockComponent>().Active = true;
                 nextStep.Get<BlockInstallColorEventX>();
                 nextStep.Get<SetRandomColorEvent>();
-                nextStep.Get<MainBlockComponent>().Blockube.Position = _gameConfiguration.CurrentBlockPosition;
+                nextStep.Get<MainBlockComponent>().CurrentBlock.Position = _gameConfiguration.CurrentBlockPosition.GetIntVector2();
                 nextStep.Get<FindLineStartEventX>();
             }
         }

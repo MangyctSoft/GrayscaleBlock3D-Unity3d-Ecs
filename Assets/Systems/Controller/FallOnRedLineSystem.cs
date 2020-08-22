@@ -5,6 +5,7 @@ using GrayscaleBlock3D.Components.Events.FieldEevents;
 using GrayscaleBlock3D.Components.Events;
 using GrayscaleBlock3D.Components.Timers;
 using GrayscaleBlock3D.Extensions;
+using UnityEngine;
 
 namespace GrayscaleBlock3D.Systems.Controller
 {
@@ -19,12 +20,14 @@ namespace GrayscaleBlock3D.Systems.Controller
             {
                 ref var moveComponent = ref _filter.Get1(i);
                 ref var blockComponent = ref _filter.Get2(i);
-                var position = blockComponent.Blockube.Position;
+                var position = blockComponent.CurrentBlock.Position;
                 var hieght = _gameContext.RedLine[(int)position.x < 0 ? 0 : (int)position.x >= _gameContext.RedLine.Length ? _gameContext.RedLine.Length - 1 : (int)position.x];
+                Debug.Log("Position = " + position);
+                Debug.Log("hieght = " + hieght);
 
                 if (hieght < _gameContext.GameField.GetLength(1))
                 {
-                    if (position.y.Equals(hieght))
+                    if (position.y <= hieght)
                     {
                         moveComponent.Speed = 0;
                         ref var nextStep = ref _filter.GetEntity(i);

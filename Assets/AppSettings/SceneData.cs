@@ -13,12 +13,26 @@ namespace GrayscaleBlock3D.AppSettings
         public Text SplashScreenScore = default;
 
         public Text ScoreText = default;
-
-        public GameObject CurrentBlockPrefab = default;
-        public GameObject PreviewBlockPrefab = default;
+        [Space]
+        [Tooltip("Пустой объект для хранения управляющих блоков.")]
+        public GameObject MainBlocksPlace = default;
+        [Space]
+        public GameObject CurrentBlock = default;
+        public GameObject PreviewBlock = default;
+        [Space]
+        [Tooltip("Пустой объект для хранения блоков для механизма рокировки.")]
+        public GameObject RotatePlace = default;
+        [Space]
+        public GameObject CurrentBlockRotate = default;
+        public GameObject PreviewBlockRotate = default;
+        [Space]
+        [Tooltip("Пустой объект для хранения всех блоков из игрового поля.")]
         public Transform PlaceBlocks = default;
-
+        [Space]
         public Transform ExplosionPrefab = default;
+
+
+
 
     }
 }

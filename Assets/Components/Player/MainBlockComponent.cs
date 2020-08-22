@@ -6,6 +6,7 @@ namespace GrayscaleBlock3D.Components.Player
     [Serializable]
     internal struct MainBlockComponent
     {
-        public IBlockube Blockube;
+        public IBlockube CurrentBlock;
+        public IBlockube PreviewBlock;
     }
 }

@@ -51,19 +51,22 @@ namespace GrayscaleBlock3D.Systems.Controller
                 if (Input.anyKeyDown)
                 {
                     var direction = Input.GetAxis("Horizontal");
-                    var fall = Input.GetAxis("Vertical");
 
                     if (direction != 0)
                     {
                         SendMessageInGame(new InputMoveStartedEvent() { Axis = direction >= 0 ? Vector2.right : Vector2.left });
+                        cancel = true;
+                        return;
                     }
+
+                    var fall = Input.GetAxis("Vertical");
                     if (fall != 0)
                     {
                         foreach (var m in _filterMainBlock)
                         {
                             ref var mainBlock = ref _filterMainBlock.Get1(m);
 
-                            var position = mainBlock.Blockube.Position.GetIntVector2();
+                            var position = mainBlock.CurrentBlock.Position.GetIntVector2();
 
                             if (position.y > _gameContext.RedLine[position.x])
                             {
@@ -75,12 +78,19 @@ namespace GrayscaleBlock3D.Systems.Controller
                                 Debug.Log("GAme OVER");
                                 SendMessageInGame(new GameOverEvent());
                             }
-
-
                         }
-
+                        return;
                     }
-                    cancel = true;
+
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        if (IsColorChangeBlocks())
+                        {
+                            SendMessageInGame(new ColorChangeStartEvent());
+                            _filter.GetEntity(i).Del<InputNonConstrainMoveEvent>();
+                            return;
+                        }
+                    }
                 }
                 else
                 {
@@ -92,7 +102,19 @@ namespace GrayscaleBlock3D.Systems.Controller
                 }
             }
         }
-
+        private bool IsColorChangeBlocks()
+        {
+            foreach (var m in _filterMainBlock)
+            {
+                ref var mainBlock = ref _filterMainBlock.Get1(m);
+                var position = mainBlock.CurrentBlock.Position.GetIntVector2();
+                if (position.x.Equals(_gameContext.GameField.GetLength(0) / 2))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         private void SendMessageInGame<T>(in T messageEvent) where T : struct
         {
             if (_gameContext.GameState != GameStates.Play) return;

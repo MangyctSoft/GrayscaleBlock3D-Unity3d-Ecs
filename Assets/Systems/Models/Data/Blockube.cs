@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using GrayscaleBlock3D.Extensions;
 
 namespace GrayscaleBlock3D.Systems.Models.Data
 {
@@ -38,6 +39,5 @@ namespace GrayscaleBlock3D.Systems.Models.Data
         {
             Transform.gameObject.SetActive(active);
         }
-
     }
 }

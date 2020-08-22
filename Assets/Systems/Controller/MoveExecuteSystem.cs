@@ -17,8 +17,8 @@ namespace GrayscaleBlock3D.Systems.Controller
                 ref var moveComponent = ref _filter.Get1(i);
                 ref var blockComponent = ref _filter.Get2(i);
 
-                blockComponent.Blockube.MoveTo(moveComponent.Direction * moveComponent.Speed);
-                var positionNew = blockComponent.Blockube.Position;
+                blockComponent.CurrentBlock.MoveTo(moveComponent.Direction * moveComponent.Speed);
+                var positionNew = blockComponent.CurrentBlock.Position;
 
                 // ref var entity = ref _filter.GetEntity(i);
                 // entity.Get<InputMoveCanceledEvent>();
