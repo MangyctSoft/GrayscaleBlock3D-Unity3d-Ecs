@@ -19,6 +19,7 @@ namespace GrayscaleBlock3D.Systems.Controller
         {
             foreach (var i in _filterChangeStart)
             {
+                SetColorToFakes();
                 RotateActivePlace();
                 _filterComponent.GetEntity(i).Get<RotateColorChangeEventX>();
             }
@@ -38,7 +39,20 @@ namespace GrayscaleBlock3D.Systems.Controller
                 component.RotationPlace.RotateActive();
             }
         }
+        private void SetColorToFakes()
+        {
+            foreach (var i in _filterMainBlock)
+            {
+                ref var blocks = ref _filterMainBlock.Get1(i);
+                ref var fakes = ref _filterMainBlock.Get2(i);
 
+                var currentColor = Additive.SetColor(_gameConfiguration, blocks.CurrentBlock.NumberColor);
+                fakes.CurrentBlockRotate.Color = currentColor;
+
+                var previewColor = Additive.SetColor(_gameConfiguration, blocks.PreviewBlock.NumberColor);
+                fakes.PreviewBlockRotate.Color = previewColor;
+            }
+        }
         private void RotateBlocks()
         {
             foreach (var i in _filterComponent)
