@@ -10,6 +10,14 @@ using GrayscaleBlock3D.Components.Events;
 
 namespace GrayscaleBlock3D
 {
+    enum BlockDirection
+    {
+        Awaite,
+        Right,
+        Left,
+        Down
+    }
+
     internal sealed class Game : MonoBehaviour
     {
         public GameConfiguration gameConfiguration = null;
@@ -42,9 +50,9 @@ namespace GrayscaleBlock3D
                 // View
 
 
-                // Controller (UiEvents, InputEvents, Init GameObjects on Scene(Create Entities))
+                // Controller
 
-                .Add(new InputSystem()) // TODO not all controls
+                .Add(new InputSystem())
 
                 .Add(new GameStateInputSystem()) // TODO : implement input
 
