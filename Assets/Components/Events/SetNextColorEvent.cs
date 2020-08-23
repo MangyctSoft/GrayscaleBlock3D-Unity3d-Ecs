@@ -2,7 +2,7 @@ using Leopotam.Ecs;
 
 namespace GrayscaleBlock3D.Components.Events
 {
-    internal struct SetRandomColorEvent
+    internal struct SetNextColorEvent : IEcsIgnoreInFilter
     {
     }
 }

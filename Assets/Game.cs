@@ -67,7 +67,7 @@ namespace GrayscaleBlock3D
 
                 .Add(new BlockToFieldSystem())
                 .Add(new BlockInstallColorSystem())
-                .Add(new RandomColorSystem())
+                .Add(new NextColorSystem())
                 .Add(new EffectSystem())
 
                 .Add(new FindLineSystem())
@@ -105,7 +105,7 @@ namespace GrayscaleBlock3D
                 .OneFrame<IsMergeMadeEvent>()
 
                 //.OneFrame<BlockInstallColorEvent>()
-                .OneFrame<SetRandomColorEvent>()
+                .OneFrame<SetNextColorEvent>()
                 .OneFrame<GameOverEvent>()
                 .OneFrame<ColorChangeStartEvent>()
                 //.OneFrame<RotateStartEvent>()
