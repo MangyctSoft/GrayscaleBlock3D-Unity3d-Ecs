@@ -29,6 +29,9 @@ namespace GrayscaleBlock3D.AppSettings
         [Tooltip("Пустой объект для хранения всех блоков из игрового поля.")]
         public Transform PlaceBlocks = default;
         [Space]
+        [Tooltip("Объект для указания места в поле.")]
+        public GameObject Target = default;
+        [Space]
         public Transform ExplosionPrefab = default;
 
 

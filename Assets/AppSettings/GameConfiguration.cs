@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using UnityEngine;
 
 namespace GrayscaleBlock3D.AppSettings
@@ -16,10 +15,16 @@ namespace GrayscaleBlock3D.AppSettings
         public float[] BlockColors = default;
         public float DelayMerge = default;
         public float DelayFall = default;
-        [DescriptionAttribute("Start color in the array BlockColors.")]
+        [Space]
+        [Header("Диапозон цветов.")]
+        [Tooltip("Start color in the array BlockColors.")]
         public int StartColor = default;
-        [DescriptionAttribute("End color in the array BlockColors.")]
+        [Tooltip("End color in the array BlockColors.")]
         public int EndColor = default;
-
+        [Space]
+        [Header("Материал для цели.")]
+        public Material Green = default;
+        public Material Warning = default;
+        public Material Normal = default;
     }
 }

@@ -17,8 +17,6 @@ namespace GrayscaleBlock3D.AppSettings
     {
         public GameStates GameState = default;
         public Blockube[,] GameField = default;
-        //public GameField[,] GameField = default;
-        public GameField[,] GameFieldTest = default;
         public int[] RedLine = default;
         public ushort ONE_DIFF = 1;
     }

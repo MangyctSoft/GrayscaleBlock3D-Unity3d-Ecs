@@ -10,14 +10,6 @@ using GrayscaleBlock3D.Components.Events;
 
 namespace GrayscaleBlock3D
 {
-    enum BlockDirection
-    {
-        Awaite,
-        Right,
-        Left,
-        Down
-    }
-
     internal sealed class Game : MonoBehaviour
     {
         public GameConfiguration gameConfiguration = null;
@@ -41,7 +33,6 @@ namespace GrayscaleBlock3D
             _systems
 
                 // Model
-                //Add(new GameFieldTestInitSystem())
                 .Add(new GameFieldInitSystem())
                 .Add(new ScoreInitSystem())
                 .Add(new BlockubeInitSystem())
@@ -51,7 +42,6 @@ namespace GrayscaleBlock3D
 
 
                 // Controller
-
                 .Add(new InputSystem())
 
                 .Add(new GameStateInputSystem()) // TODO : implement input
@@ -81,34 +71,21 @@ namespace GrayscaleBlock3D
 
                 .Add(new TimersSystem())
 
-                // .Add(new MoveProcessing())
-                // .Add(new FieldProcessing())
-                // .Add(new TestFieldProcessing())
-                // .Add(new InputProcessing())
-                // .Add(new LineProcessing())
-                // .Add(new MergeProcessing())
-                // .Add(new MergeGlobalProcessing())
-
                 // register one-frame components
                 .OneFrame<InputMoveStartedEvent>()
                 .OneFrame<InputMoveCanceledEvent>()
                 .OneFrame<InputFallStartedEvent>()
-                //.OneFrame<InputFallCanceledEvent>()
                 .OneFrame<ChangePositionEvent>()
                 .OneFrame<IsFallMadeEvent>()
                 .OneFrame<BlockInstallToFieldEvent>()
 
-                //.OneFrame<MergeStartEvent>()
-                //.OneFrame<MergeExecuteEvent>()
                 .OneFrame<IsRemoveLineMadeEvent>()
 
                 .OneFrame<IsMergeMadeEvent>()
 
-                //.OneFrame<BlockInstallColorEvent>()
                 .OneFrame<SetNextColorEvent>()
                 .OneFrame<GameOverEvent>()
                 .OneFrame<ColorChangeStartEvent>()
-                //.OneFrame<RotateStartEvent>()
 
                 // inject 
                 .Inject(gameConfiguration)

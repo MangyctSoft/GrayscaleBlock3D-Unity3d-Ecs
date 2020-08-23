@@ -31,3 +31,6 @@ MonoBehaviour:
   DelayFall: 0.1
   StartColor: 2
   EndColor: 6
+  Green: {fileID: 2100000, guid: f70dc8323cf4bb644aae83e8fcd976e8, type: 2}
+  Warning: {fileID: 2100000, guid: 0e233f0add0607e4d8e1df632503ed26, type: 2}
+  Normal: {fileID: 2100000, guid: f636891303e093040a245874b68b8221, type: 2}
