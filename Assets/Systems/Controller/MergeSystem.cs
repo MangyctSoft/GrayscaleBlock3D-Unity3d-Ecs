@@ -58,6 +58,7 @@ namespace GrayscaleBlock3D.Systems.Controller
                     }
                 }
                 nextStep.Get<InputNonConstrainMoveEvent>();
+                nextStep.Get<TargetEvent>();
                 nextStep.Del<MergeStartEventX>();
             }
 

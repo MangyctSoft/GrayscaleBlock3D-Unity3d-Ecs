@@ -3,6 +3,7 @@ using GrayscaleBlock3D.Components.Requests;
 using GrayscaleBlock3D.Extensions;
 using GrayscaleBlock3D.AppSettings;
 using GrayscaleBlock3D.Components.Events.InputEvents;
+using GrayscaleBlock3D.Components.Events.FieldEevents;
 
 namespace GrayscaleBlock3D.Systems.Models.Init
 {
@@ -14,6 +15,7 @@ namespace GrayscaleBlock3D.Systems.Models.Init
         {
             _world.SendMessage(new ChangeGameStateRequest() { State = GameStates.Pause });
             _world.SendMessage(new InputNonConstrainMoveEvent());
+            _world.SendMessage(new TargetEvent());
         }
     }
 }

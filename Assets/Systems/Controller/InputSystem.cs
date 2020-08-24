@@ -3,6 +3,7 @@ using Leopotam.Ecs;
 using GrayscaleBlock3D.AppSettings;
 using GrayscaleBlock3D.Extensions;
 using GrayscaleBlock3D.Components.Events;
+using GrayscaleBlock3D.Components.Events.FieldEevents;
 using GrayscaleBlock3D.Components.Events.InputEvents;
 using GrayscaleBlock3D.Components.Player;
 
@@ -17,33 +18,6 @@ namespace GrayscaleBlock3D.Systems.Controller
         bool cancel = false;
         public void Run()
         {
-            #region old
-            // foreach (var i in _filter)
-            // {
-            //     ref var blockMove = ref _filter.Get1(i);
-            //     if (blockMove.isMove)
-            //     {
-            //         if (Input.GetKeyDown(KeyCode.Space) && !blockMove.isFalling)
-            //         {
-            //             direction = BlockDirection.Down;
-            //             blockMove.isFalling = true;
-            //         }
-
-            //         if (!blockMove.isFalling && !blockMove.isInput)
-            //         {
-            //             blockMove.isInput = true;
-
-            //             var x = Input.GetAxis("Horizontal");
-
-            //             //direction = BlockDirection.Awaite;
-
-            //             direction = x == 0 ? BlockDirection.Awaite : x > 0 ? BlockDirection.Right : BlockDirection.Left;
-
-            //         }
-            //         blockMove.direction = direction;
-            //     }
-            // }
-            #endregion
             foreach (var i in _filter)
             {
                 ref var move = ref _filter.Get1(i);

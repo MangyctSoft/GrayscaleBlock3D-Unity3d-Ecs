@@ -27,7 +27,6 @@ namespace GrayscaleBlock3D.Systems.Controller
                 nextStep.Get<ManagerBlockComponent>().Active = true;
                 nextStep.Get<BlockInstallColorEventX>();
                 nextStep.Get<SetNextColorEvent>();
-                //nextStep.Get<MainBlockComponent>().CurrentBlock.Position = 
                 nextStep.Get<FindLineStartEventX>();
 
                 currentBlock.Position = _gameConfiguration.CurrentBlockPosition.GetIntVector2();

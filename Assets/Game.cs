@@ -37,6 +37,7 @@ namespace GrayscaleBlock3D
                 .Add(new ScoreInitSystem())
                 .Add(new BlockubeInitSystem())
                 .Add(new GameStateInitSystem())
+                .Add(new TargetInitSystem())
 
                 // View
 
@@ -69,6 +70,9 @@ namespace GrayscaleBlock3D
 
                 .Add(new RotateColorChangeSystem())
 
+                .Add(new TargetSystem())
+                .Add(new TargetOnOffSystem())
+
                 .Add(new TimersSystem())
 
                 // register one-frame components
@@ -86,6 +90,7 @@ namespace GrayscaleBlock3D
                 .OneFrame<SetNextColorEvent>()
                 .OneFrame<GameOverEvent>()
                 .OneFrame<ColorChangeStartEvent>()
+                .OneFrame<TargetEvent>()
 
                 // inject 
                 .Inject(gameConfiguration)
