@@ -32,7 +32,7 @@ namespace GrayscaleBlock3D.AppSettings
         [Tooltip("Объект для указания места в поле.")]
         public GameObject Target = default;
         [Space]
-        public Transform ExplosionPrefab = default;
+        public GameObject ExplosionPrefab = default;
 
 
 

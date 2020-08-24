@@ -12,6 +12,8 @@ namespace GrayscaleBlock3D.Systems.Controller
     {
         private readonly GameConfiguration _gameConfiguration;
         private readonly GameContext _gameContext = null;
+        private readonly SceneData _sceneData = null;
+
         private readonly EcsFilter<ManagerBlockComponent, RemoveLineEventX>.Exclude<IsRemoveLineMadeEvent, TimerRemoveLineComponent> _filter = null;
         void IEcsRunSystem.Run()
         {
@@ -34,7 +36,7 @@ namespace GrayscaleBlock3D.Systems.Controller
             for (int x = 0; x < blockubes.GetLength(0); x++)
             {
                 blockubes[x, line].NumberColor = 0;
-                blockubes[x, line].SetActive(false);
+                blockubes[x, line].SetActive(false, _sceneData.ExplosionPrefab);
             }
 
             for (int x = 0; x < blockubes.GetLength(0); x++)

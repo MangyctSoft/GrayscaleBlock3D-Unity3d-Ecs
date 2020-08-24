@@ -59,7 +59,6 @@ namespace GrayscaleBlock3D
                 .Add(new BlockToFieldSystem())
                 .Add(new BlockInstallColorSystem())
                 .Add(new NextColorSystem())
-                .Add(new EffectSystem())
 
                 .Add(new FindLineSystem())
                 .Add(new RemoveLineSystem())

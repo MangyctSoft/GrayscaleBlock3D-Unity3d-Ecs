@@ -35,9 +35,24 @@ namespace GrayscaleBlock3D.Systems.Models.Data
             Transform.position += new Vector3(vector2.x, vector2.y, 0);
         }
 
-        public void SetActive(bool active)
+        public void SetActive(bool active, GameObject gameObject = default)
         {
             Transform.gameObject.SetActive(active);
+
+            if (!active && gameObject != null)
+            {
+                var boom = GameObject.Instantiate(gameObject, Position, Quaternion.identity);
+
+                var colliders = Physics.OverlapSphere(Position, 2f);
+                foreach (var obj in colliders)
+                {
+                    Rigidbody rb = obj.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        rb.AddExplosionForce(600f, Position, 1f);
+                    }
+                }
+            }
         }
     }
 }

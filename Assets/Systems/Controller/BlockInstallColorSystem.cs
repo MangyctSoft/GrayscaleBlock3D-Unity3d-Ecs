@@ -11,6 +11,7 @@ namespace GrayscaleBlock3D.Systems.Controller
     {
         private readonly GameConfiguration _gameConfiguration;
         private readonly GameContext _gameContext = null;
+        private readonly SceneData _sceneData = null;
         private readonly EcsFilter<ManagerBlockComponent, BlockInstallColorEventX> _filter = null;
         void IEcsRunSystem.Run()
         {
@@ -34,11 +35,11 @@ namespace GrayscaleBlock3D.Systems.Controller
                 else
                 {
                     var blockUp = _gameContext.GameField[(int)position.x, (int)position.y + _gameContext.ONE_DIFF];
-                    blockUp.SetActive(active);
+                    blockUp.SetActive(active, _sceneData.ExplosionPrefab);
                     blockUp.NumberColor = 0;
                     if (MoveDownBlocks(_gameContext.GameField, blockUp.Position))
                     {
-                        nextStep.Get<ManagerBlockComponent>().Position = blockUp.Position;
+                        block.Position = blockUp.Position;
                     }
                     _gameContext.RedLine[(int)position.x]--;
                 }
