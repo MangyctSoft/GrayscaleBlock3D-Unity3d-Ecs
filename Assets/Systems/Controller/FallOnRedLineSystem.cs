@@ -22,8 +22,6 @@ namespace GrayscaleBlock3D.Systems.Controller
                 ref var blockComponent = ref _filter.Get2(i);
                 var position = blockComponent.CurrentBlock.Position;
                 var hieght = _gameContext.RedLine[(int)position.x < 0 ? 0 : (int)position.x >= _gameContext.RedLine.Length ? _gameContext.RedLine.Length - 1 : (int)position.x];
-                Debug.Log("Position = " + position);
-                Debug.Log("hieght = " + hieght);
 
                 if (hieght < _gameContext.GameField.GetLength(1))
                 {

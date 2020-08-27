@@ -35,8 +35,8 @@ namespace GrayscaleBlock3D.Systems.Controller
         {
             for (int x = 0; x < blockubes.GetLength(0); x++)
             {
-                blockubes[x, line].NumberColor = 0;
-                blockubes[x, line].SetActive(false, _sceneData.ExplosionPrefab);
+                blockubes[x, line].Destroy();
+                blockubes[x, line] = null;
             }
 
             for (int x = 0; x < blockubes.GetLength(0); x++)
@@ -47,19 +47,20 @@ namespace GrayscaleBlock3D.Systems.Controller
                 }
                 for (int y = line; y < blockubes.GetLength(1) - 1; y++)
                 {
-                    if (!blockubes[x, y + 1].Transform.gameObject.activeSelf)
+                    if (blockubes[x, y + 1] == null)
                     {
                         break;
                     }
                     else
                     {
-                        var color = Additive.SetColor(_gameConfiguration, blockubes[x, y + 1].NumberColor);
-                        blockubes[x, y].Color = color;
-                        blockubes[x, y].NumberColor = blockubes[x, y + 1].NumberColor;
-                        blockubes[x, y].SetActive(true);
-
-                        blockubes[x, y + 1].NumberColor = 0;
-                        blockubes[x, y + 1].SetActive(false);
+                        //var color = Additive.SetColor(_gameConfiguration, blockubes[x, y + 1].NumberColor);
+                        //blockubes[x, y].Color = color;
+                        // blockubes[x, y].NumberColor = blockubes[x, y + 1].NumberColor;
+                        blockubes[x, y] = blockubes[x, y + 1];
+                        blockubes[x, y + 1].MoveTo(new Vector2(0, -1));
+                        blockubes[x, y + 1] = null;
+                        //blockubes[x, y + 1].Destroy();
+                        //blockubes[x, y + 1] = null;
                     }
                 }
             }

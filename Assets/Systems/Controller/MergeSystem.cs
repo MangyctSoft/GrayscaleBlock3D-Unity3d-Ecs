@@ -34,14 +34,16 @@ namespace GrayscaleBlock3D.Systems.Controller
                 {
                     blockUp = _gameContext.GameField[(int)position.x, (int)position.y];
                     blockDown = _gameContext.GameField[(int)position.x, (int)position.y - _gameContext.ONE_DIFF];
-
-                    if (blockUp.EqualsColor(blockDown) && blockDown.NumberColor > _gameContext.ONE_DIFF)
+                    if (blockUp != null && blockDown != null)
                     {
-                        nextStep.Get<IsMergeMadeEvent>();
-                        nextStep.Get<MergeExecuteEvent>();
-                        nextStep.Del<MergeStartEventX>();
+                        if (blockUp.EqualsColor(blockDown) && blockDown.NumberColor > _gameContext.ONE_DIFF)
+                        {
+                            nextStep.Get<IsMergeMadeEvent>();
+                            nextStep.Get<MergeExecuteEvent>();
+                            nextStep.Del<MergeStartEventX>();
 
-                        return;
+                            return;
+                        }
                     }
                 }
                 if (needScanField)

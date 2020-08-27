@@ -3,9 +3,8 @@ using UnityEngine;
 
 namespace GrayscaleBlock3D.Systems.Models.Data
 {
-    public interface IBlockube
+    public interface IBlockube : IBaseObject
     {
-        Vector2 Position { get; set; }
         ushort NumberColor { get; set; }
         Color Color { set; }
         void MoveTo(in Vector2 direction);

@@ -1,12 +1,8 @@
-using UnityEngine;
 using Leopotam.Ecs;
 using GrayscaleBlock3D.AppSettings;
 using GrayscaleBlock3D.Components.Player;
 using GrayscaleBlock3D.Systems.Models.Data;
 using GrayscaleBlock3D.Components.Events.FieldEevents;
-using GrayscaleBlock3D.Components.Events.InputEvents;
-using GrayscaleBlock3D.Extensions;
-using GrayscaleBlock3D.Components.Timers;
 
 namespace GrayscaleBlock3D.Systems.Controller
 {
@@ -44,8 +40,11 @@ namespace GrayscaleBlock3D.Systems.Controller
             ushort previosColor = 0;
             for (ushort x = 0; x < blockubes.GetLength(0); x++)
             {
+                if (blockubes[x, y] == null)
+                {
+                    return false;
+                }
                 currentColor = blockubes[x, y].NumberColor;
-                // Debug.Log("currentColor = " + currentColor);
                 if (currentColor.Equals(0))
                 {
                     return false;

@@ -11,6 +11,7 @@ namespace GrayscaleBlock3D.Systems.Models.Init
         private readonly GameConfiguration _gameConfiguration = null;
         private readonly GameContext _gameContext = null;
         private readonly SceneData _sceneData = null;
+        private readonly PoolsObject _poolsObject = null;
         void IEcsInitSystem.Init() => SetGameField();
         private void SetGameField()
         {
@@ -19,16 +20,17 @@ namespace GrayscaleBlock3D.Systems.Models.Init
             _gameContext.GameField = new Blockube[x0, y0];
             _gameContext.RedLine = new int[x0];
 
-            for (int x = 0; x < _gameContext.GameField.GetLength(0); x++)
-            {
-                for (int y = 0; y < _gameContext.GameField.GetLength(1); y++)
-                {
-                    var block = GameObject.Instantiate(_gameConfiguration.BlockubePrefab, new Vector3(x, y, 0), Quaternion.identity, _sceneData.PlaceBlocks);
-                    block.SetActive(false);
-                    var item = new Blockube(block, new Color(), 0);
-                    _gameContext.GameField[x, y] = item;
-                }
-            }
+            // for (int x = 0; x < _gameContext.GameField.GetLength(0); x++)
+            // {
+            //     for (int y = 0; y < 3; y++)
+            //     {
+            //         var poolsObject = _poolsObject.Blocks.Get();
+            //         // var block = GameObject.Instantiate(_gameConfiguration.BlockubePrefab, new Vector3(x, y, 0), Quaternion.identity, _sceneData.PlaceBlocks);
+            //         //block.SetActive(false);
+            //         var item = new Blockube(poolsObject.PoolTransform.gameObject, new Color(), 0, poolsObject);
+            //         //_gameContext.GameField[x, y] = item;
+            //     }
+            // }
         }
     }
 }

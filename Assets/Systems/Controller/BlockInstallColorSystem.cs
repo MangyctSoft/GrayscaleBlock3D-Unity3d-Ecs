@@ -4,6 +4,7 @@ using GrayscaleBlock3D.AppSettings;
 using GrayscaleBlock3D.Components.Player;
 using GrayscaleBlock3D.Components.Events.FieldEevents;
 using GrayscaleBlock3D.Systems.Models.Data;
+using GrayscaleBlock3D.Extensions;
 
 namespace GrayscaleBlock3D.Systems.Controller
 {
@@ -11,7 +12,8 @@ namespace GrayscaleBlock3D.Systems.Controller
     {
         private readonly GameConfiguration _gameConfiguration;
         private readonly GameContext _gameContext = null;
-        private readonly SceneData _sceneData = null;
+        private readonly PoolsObject _poolsObject = null;
+
         private readonly EcsFilter<ManagerBlockComponent, BlockInstallColorEventX> _filter = null;
         void IEcsRunSystem.Run()
         {
@@ -19,30 +21,40 @@ namespace GrayscaleBlock3D.Systems.Controller
             {
                 ref var block = ref _filter.Get1(i);
 
-                var position = block.Position;
+                var position = block.Position.GetIntVector2();
                 var numberColor = block.NumberColor;
                 var active = block.Active;
 
-                var blockInField = _gameContext.GameField[(int)position.x, (int)position.y];
-                blockInField.NumberColor = numberColor;
+                var blockInField = _gameContext.GameField[position.x, position.y];
                 ref var nextStep = ref _filter.GetEntity(i);
 
                 if (active)
                 {
-                    blockInField.SetActive(active);
-                    _gameContext.RedLine[(int)position.x]++;
+                    var poolsObject = _poolsObject.Blocks.Get();
+                    var transform = poolsObject.PoolTransform;
+                    transform.position = new Vector3(position.x, position.y);
+                    transform.gameObject.SetActive(true);
+                    blockInField = new Blockube(poolsObject.PoolTransform.gameObject, new Color(), 0, poolsObject);
+                    _gameContext.GameField[position.x, position.y] = blockInField;
+                    _gameContext.RedLine[position.x]++;
                 }
                 else
                 {
-                    var blockUp = _gameContext.GameField[(int)position.x, (int)position.y + _gameContext.ONE_DIFF];
-                    blockUp.SetActive(active, _sceneData.ExplosionPrefab);
-                    blockUp.NumberColor = 0;
-                    if (MoveDownBlocks(_gameContext.GameField, blockUp.Position))
+                    var blockUp = _gameContext.GameField[position.x, position.y + _gameContext.ONE_DIFF];
+                    if (blockUp != null)
                     {
-                        block.Position = blockUp.Position;
+                        var positionScan = blockUp.Position;
+                        blockUp.Destroy();
+                        _gameContext.GameField[position.x, position.y + _gameContext.ONE_DIFF] = null;
+                        if (MoveDownBlocks(ref _gameContext.GameField, blockUp.Position))
+                        {
+                            block.Position = positionScan;
+                        }
                     }
-                    _gameContext.RedLine[(int)position.x]--;
+                    _gameContext.RedLine[position.x]--;
                 }
+
+                blockInField.NumberColor = numberColor;
                 var color = Additive.SetColor(_gameConfiguration, numberColor);
                 blockInField.Color = color;
 
@@ -50,7 +62,7 @@ namespace GrayscaleBlock3D.Systems.Controller
             }
         }
 
-        private bool MoveDownBlocks(in Blockube[,] blockubes, in Vector2 position)
+        private bool MoveDownBlocks(ref Blockube[,] blockubes, in Vector2 position)
         {
             var result = false;
             var x = (ushort)position.x;
@@ -58,19 +70,11 @@ namespace GrayscaleBlock3D.Systems.Controller
 
             for (int y = line; y < blockubes.GetLength(1) - 1; y++)
             {
-                if (!blockubes[x, y + 1].Transform.gameObject.activeSelf)
+                if (blockubes[x, y + 1] != null)
                 {
-                    break;
-                }
-                else
-                {
-                    var color = Additive.SetColor(_gameConfiguration, blockubes[x, y + 1].NumberColor);
-                    blockubes[x, y].Color = color;
-                    blockubes[x, y].NumberColor = blockubes[x, y + 1].NumberColor;
-                    blockubes[x, y].SetActive(true);
-
-                    blockubes[x, y + 1].NumberColor = 0;
-                    blockubes[x, y + 1].SetActive(false);
+                    blockubes[x, y] = blockubes[x, y + 1];
+                    blockubes[x, y + 1].MoveTo(new Vector2(0, -1));
+                    blockubes[x, y + 1] = null;
                     result = true;
                 }
             }

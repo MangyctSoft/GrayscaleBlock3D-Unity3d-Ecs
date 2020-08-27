@@ -7,6 +7,7 @@ using GrayscaleBlock3D.Systems.Controller;
 using GrayscaleBlock3D.Components.Events.InputEvents;
 using GrayscaleBlock3D.Components.Events.FieldEevents;
 using GrayscaleBlock3D.Components.Events;
+using GrayscaleBlock3D.Components.Requests;
 
 namespace GrayscaleBlock3D
 {
@@ -80,6 +81,8 @@ namespace GrayscaleBlock3D
                 .OneFrame<InputFallStartedEvent>()
                 .OneFrame<ChangePositionEvent>()
                 .OneFrame<IsFallMadeEvent>()
+
+
                 .OneFrame<BlockInstallToFieldEvent>()
 
                 .OneFrame<IsRemoveLineMadeEvent>()
@@ -95,7 +98,7 @@ namespace GrayscaleBlock3D
                 .Inject(gameConfiguration)
                 .Inject(GetComponent<SceneData>())
                 .Inject(gameContext)
-
+                .Inject(new PoolsObject())
                 .Init();
         }
 
