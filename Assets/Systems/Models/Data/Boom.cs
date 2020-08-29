@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using GrayscaleBlock3D.Pooling;
+using System.Collections.Generic;
 
 namespace GrayscaleBlock3D.Systems.Models.Data
 {
@@ -12,13 +13,24 @@ namespace GrayscaleBlock3D.Systems.Models.Data
             set => Transform.position = value;
         }
         public Transform Transform { get; }
-        private Rigidbody Rigidbody { get; }
+        private IEnumerable<Rigidbody> ChildRigidbody { get; }
         private readonly IPoolObject _poolObject;
-        public Boom(Transform transform, Rigidbody rigidbody, IPoolObject poolObject = null)
+        public Boom(Transform transform, IEnumerable<Rigidbody> childRigidbody, IPoolObject poolObject = null)
         {
             Transform = transform ? transform : throw new ArgumentNullException(nameof(transform));
-            Rigidbody = rigidbody ? rigidbody : throw new ArgumentNullException(nameof(rigidbody));
+            ChildRigidbody = childRigidbody != null ? childRigidbody : throw new ArgumentNullException(nameof(childRigidbody));
             _poolObject = poolObject;
+        }
+        public void SetBoom()
+        {
+            foreach (var item in ChildRigidbody)
+            {
+                if (item != null)
+                {
+                    item.AddExplosionForce(600f, Position, 1f);
+                }
+            }
+
         }
         public void Destroy()
         {

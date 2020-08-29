@@ -5,6 +5,7 @@ using GrayscaleBlock3D.Components.Player;
 using GrayscaleBlock3D.Components.Events.FieldEevents;
 using GrayscaleBlock3D.Systems.Models.Data;
 using GrayscaleBlock3D.Extensions;
+using GrayscaleBlock3D.Pooling;
 
 namespace GrayscaleBlock3D.Systems.Controller
 {
@@ -45,6 +46,15 @@ namespace GrayscaleBlock3D.Systems.Controller
                     {
                         var positionScan = blockUp.Position;
                         blockUp.Destroy();
+                        #region TODO Make event
+                        var poolObjectBoom = (PoolObjectBoom)_poolsObject.Booms.Get();
+                        var transformBoom = poolObjectBoom.PoolTransform;
+                        transformBoom.position = new Vector3(positionScan.x, positionScan.y);
+                        transformBoom.gameObject.SetActive(true);
+                        var rigidbodyBoom = poolObjectBoom.ChildRigidbody;
+                        var boom = new Boom(transformBoom, rigidbodyBoom, poolObjectBoom);
+                        boom.SetBoom();
+                        #endregion
                         _gameContext.GameField[position.x, position.y + _gameContext.ONE_DIFF] = null;
                         if (MoveDownBlocks(ref _gameContext.GameField, blockUp.Position))
                         {
