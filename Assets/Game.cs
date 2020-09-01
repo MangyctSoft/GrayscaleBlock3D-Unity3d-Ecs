@@ -64,6 +64,7 @@ namespace GrayscaleBlock3D
                 .Add(new FindLineSystem())
                 .Add(new RemoveLineSystem())
                 .Add(new RemoveLineTimerStartSystem())
+                .Add(new BoomSystem())
 
                 .Add(new MergeSystem())
                 .Add(new MergeTimerStartSystem())
@@ -93,6 +94,7 @@ namespace GrayscaleBlock3D
                 .OneFrame<GameOverEvent>()
                 .OneFrame<ColorChangeStartEvent>()
                 .OneFrame<TargetEvent>()
+                .OneFrame<IsBoomBlockEvent>()
 
                 // inject 
                 .Inject(gameConfiguration)

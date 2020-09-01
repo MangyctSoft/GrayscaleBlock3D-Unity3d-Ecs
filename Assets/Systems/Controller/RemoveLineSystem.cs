@@ -5,6 +5,7 @@ using GrayscaleBlock3D.Components.Player;
 using GrayscaleBlock3D.Systems.Models.Data;
 using GrayscaleBlock3D.Components.Events.FieldEevents;
 using GrayscaleBlock3D.Components.Timers;
+using System.Collections.Generic;
 
 namespace GrayscaleBlock3D.Systems.Controller
 {
@@ -23,7 +24,7 @@ namespace GrayscaleBlock3D.Systems.Controller
                 ushort line = (ushort)block.Position.y;
                 ref var nextStep = ref _filter.GetEntity(i);
 
-                RemoveLine(_gameContext.GameField, line, _gameContext.RedLine);
+                RemoveLine(ref nextStep, _gameContext.GameField, line, _gameContext.RedLine);
                 nextStep.Get<ManagerBlockComponent>().NeedScanField = true;
                 nextStep.Get<ManagerBlockComponent>().ScanPosition = new Vector2(0, line);
                 nextStep.Get<MergeStartEventX>();
@@ -31,13 +32,16 @@ namespace GrayscaleBlock3D.Systems.Controller
                 nextStep.Del<RemoveLineEventX>();
             }
         }
-        private void RemoveLine(in Blockube[,] blockubes, in ushort line, in int[] redLine)
+        private void RemoveLine(ref EcsEntity nextStep, in Blockube[,] blockubes, in ushort line, in int[] redLine)
         {
+            var positions = new List<Vector2>();
             for (int x = 0; x < blockubes.GetLength(0); x++)
             {
                 blockubes[x, line].Destroy();
+                positions.Add(new Vector2(x, line));
                 blockubes[x, line] = null;
             }
+            nextStep.Get<IsBoomBlockEvent>().Position = positions;
 
             for (int x = 0; x < blockubes.GetLength(0); x++)
             {

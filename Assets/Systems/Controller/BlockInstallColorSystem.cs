@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Leopotam.Ecs;
 using GrayscaleBlock3D.AppSettings;
@@ -46,15 +47,9 @@ namespace GrayscaleBlock3D.Systems.Controller
                     {
                         var positionScan = blockUp.Position;
                         blockUp.Destroy();
-                        #region TODO Make event
-                        var poolObjectBoom = (PoolObjectBoom)_poolsObject.Booms.Get();
-                        var transformBoom = poolObjectBoom.PoolTransform;
-                        transformBoom.position = new Vector3(positionScan.x, positionScan.y);
-                        transformBoom.gameObject.SetActive(true);
-                        var rigidbodyBoom = poolObjectBoom.ChildRigidbody;
-                        var boom = new Boom(transformBoom, rigidbodyBoom, poolObjectBoom);
-                        boom.SetBoom();
-                        #endregion
+
+                        nextStep.Get<IsBoomBlockEvent>().Position = new List<Vector2> { positionScan };
+
                         _gameContext.GameField[position.x, position.y + _gameContext.ONE_DIFF] = null;
                         if (MoveDownBlocks(ref _gameContext.GameField, blockUp.Position))
                         {
