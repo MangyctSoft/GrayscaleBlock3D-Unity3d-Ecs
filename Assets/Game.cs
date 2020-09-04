@@ -61,8 +61,8 @@ namespace GrayscaleBlock3D
                 .Add(new BlockInstallColorSystem())
                 .Add(new NextColorSystem())
 
-                .Add(new FindLineSystem())
-                .Add(new RemoveLineSystem())
+                .Add(new FindManyIdenticalBlocksSystem())
+                .Add(new RemoveManyIdenticalBlocksSystem())
                 .Add(new RemoveLineTimerStartSystem())
                 .Add(new BoomSystem())
 

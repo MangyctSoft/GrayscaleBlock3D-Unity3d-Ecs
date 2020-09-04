@@ -57,14 +57,17 @@ namespace GrayscaleBlock3D.Systems.Controller
         }
         private Material SetMaterial(in int numberColor, in Vector2Int position)
         {
-            var numberColorToField = _gameContext.GameField[position.x, position.y - 1].NumberColor;
-            if (numberColorToField == numberColor)
+            if (_gameContext.GameField[position.x, position.y - 1] != null)
             {
-                return _gameConfiguration.Green;
-            }
-            else if (numberColorToField < numberColor)
-            {
-                return _gameConfiguration.Normal;
+                var numberColorToField = _gameContext.GameField[position.x, position.y - 1].NumberColor;
+                if (numberColorToField == numberColor)
+                {
+                    return _gameConfiguration.Green;
+                }
+                else if (numberColorToField < numberColor)
+                {
+                    return _gameConfiguration.Normal;
+                }
             }
             return _gameConfiguration.Warning;
         }

@@ -6,6 +6,6 @@ namespace GrayscaleBlock3D.Components.Events.FieldEevents
 {
     internal struct IsBoomBlockEvent
     {
-        public IEnumerable<Vector2> Position;
+        public IEnumerable<Vector2Int> Position;
     }
 }

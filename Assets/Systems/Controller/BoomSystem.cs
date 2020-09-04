@@ -22,7 +22,7 @@ namespace GrayscaleBlock3D.Systems.Controller
                 {
                     var poolObjectBoom = (PoolObjectBoom)_poolsObject.Booms.Get();
                     var transformBoom = poolObjectBoom.PoolTransform;
-                    transformBoom.position = item;
+                    transformBoom.position = new Vector3(item.x, item.y);
                     transformBoom.gameObject.SetActive(true);
                     var rigidbodyBoom = poolObjectBoom.ChildRigidbody;
                     var boom = new Boom(transformBoom, rigidbodyBoom, poolObjectBoom);

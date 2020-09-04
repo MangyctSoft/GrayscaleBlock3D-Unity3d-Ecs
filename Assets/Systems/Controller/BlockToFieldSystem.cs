@@ -5,6 +5,7 @@ using GrayscaleBlock3D.Components.Events;
 using GrayscaleBlock3D.Components.Events.FieldEevents;
 using GrayscaleBlock3D.Extensions;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace GrayscaleBlock3D.Systems.Controller
 {
@@ -25,6 +26,7 @@ namespace GrayscaleBlock3D.Systems.Controller
                 nextStep.Get<ManagerBlockComponent>().Position = position;
                 nextStep.Get<ManagerBlockComponent>().NumberColor = numberColor;
                 nextStep.Get<ManagerBlockComponent>().Active = true;
+                nextStep.Get<ManagerBlockComponent>().ScanQueuePositions = new Queue<Vector2Int>(); ;
                 nextStep.Get<BlockInstallColorEventX>();
                 nextStep.Get<SetNextColorEvent>();
                 nextStep.Get<FindLineStartEventX>();

@@ -45,10 +45,10 @@ namespace GrayscaleBlock3D.Systems.Controller
                     var blockUp = _gameContext.GameField[position.x, position.y + _gameContext.ONE_DIFF];
                     if (blockUp != null)
                     {
-                        var positionScan = blockUp.Position;
+                        var positionScan = blockUp.Position.GetIntVector2();
                         blockUp.Destroy();
 
-                        nextStep.Get<IsBoomBlockEvent>().Position = new List<Vector2> { positionScan };
+                        nextStep.Get<IsBoomBlockEvent>().Position = new List<Vector2Int> { positionScan };
 
                         _gameContext.GameField[position.x, position.y + _gameContext.ONE_DIFF] = null;
                         if (MoveDownBlocks(ref _gameContext.GameField, blockUp.Position))

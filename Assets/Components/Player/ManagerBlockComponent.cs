@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace GrayscaleBlock3D.Components.Player
 {
@@ -8,6 +9,6 @@ namespace GrayscaleBlock3D.Components.Player
         public ushort NumberColor;
         public bool Active;
         public bool NeedScanField;
-        public Vector2 ScanPosition;
+        public Queue<Vector2Int> ScanQueuePositions;
     }
 }

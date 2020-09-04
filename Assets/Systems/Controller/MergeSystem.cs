@@ -26,7 +26,7 @@ namespace GrayscaleBlock3D.Systems.Controller
 
                 var position = block.Position;
                 var needScanField = block.NeedScanField;
-                var scanPosition = block.ScanPosition;
+                var scanQueuePositions = block.ScanQueuePositions;
 
                 ref var nextStep = ref _filterStart.GetEntity(i);
 
@@ -40,23 +40,27 @@ namespace GrayscaleBlock3D.Systems.Controller
                         {
                             nextStep.Get<IsMergeMadeEvent>();
                             nextStep.Get<MergeExecuteEvent>();
-                            nextStep.Del<MergeStartEventX>();
 
+                            nextStep.Del<MergeStartEventX>();
                             return;
                         }
                     }
                 }
                 if (needScanField)
                 {
-                    nextStep.Get<ManagerBlockComponent>().Position = new Vector2(scanPosition.x, scanPosition.y);
-                    nextStep.Get<ManagerBlockComponent>().ScanPosition += Vector2.right;
-                    if (scanPosition.x > _gameContext.GameField.GetLength(0) - 1)
+                    if (scanQueuePositions.Count > 0)
                     {
-                        nextStep.Get<ManagerBlockComponent>().NeedScanField = false;
+                        var scanPosition = scanQueuePositions.Dequeue();
+                        //Debug.Log($"============================== MERGER ADDITIVE = {scanPosition}");
+                        nextStep.Get<ManagerBlockComponent>().Position = new Vector2(scanPosition.x, scanPosition.y);
+                        nextStep.Get<FindLineStartEventX>();
+
+                        nextStep.Del<MergeStartEventX>();
+                        return;
                     }
                     else
                     {
-                        return;
+                        nextStep.Get<ManagerBlockComponent>().NeedScanField = false;
                     }
                 }
                 nextStep.Get<InputNonConstrainMoveEvent>();
